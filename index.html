@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pubdater.io</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="title-bar">
+        <img src="icons/ico.svg" class="logo">
+        <div class="title-text">
+            <h1>Pubdater</h1>
+            <p class="powered-by">Powered by pub.dev</p>
+        </div>
+    </div>
+    <div class="main-body">
+        <textarea readonly="true" id="help" disabled class="noCursor"></textarea>
+        <div class="main">
+            <textarea id="output" placeholder="Your updated pubspec contents will appear here..."></textarea>
+        </div>
+        <textarea id="console" readonly="true"></textarea>
+    </div>
+    <div class="btm">
+        <div class="typing-area">
+            <div class="p1">
+                <p id="options">Options</p>
+                <textarea placeholder="pubspec.yaml contents" id="pubspec"></textarea>
+            </div>
+            <div class="p2">
+                <div class="version-txt-line">
+                    <p id="dart-ver">Dart SDK</p>
+                    <img src="icons/ver-up.svg" class="ver" />
+                </div>
+                <input id="version" type="text" placeholder="eg: 2.3.6" />
+            </div>
+            <div class="p3">
+                <svg id="submitButton" onclick="runPubdaterCall()" class="submit" width="35" height="35"
+                    viewBox="0 0 40 45" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M0.516263 7.948C0.401113 2.42998 6.41929 -1.0446 11.1405 1.81414L36.2499 17.0182C40.804 19.7758 40.7348 26.4063 36.1242 29.0682L11.6272 43.2116C7.01654 45.8735 1.23976 42.6182 1.12869 37.2955L0.516263 7.948Z"
+                        fill="currentColor" />
+                </svg>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let processHead = "WELCOME TO PUBDATER\n-------------------\n";
+        let console = document.getElementById("console");
+        let err = false;
+        let inProgress = false;
+
+        document.getElementById("help").value = "HELP\n----\n\n> Enter the pubspec.yaml contents on the text area provided\n\n> Enter the target version of the Dart SDK";
+        console.value = processHead;
+
+        function updateProgressBar(textarea, totalSteps, delay) {
+            let progress = "";
+            let step = 0;
+
+            function update() {
+                if (step <= totalSteps) {
+                    if (!inProgress || err) {
+                        err = false;
+                        processHead = "WELCOME TO PUBDATER\n-------------------\n";
+                        return;
+                    }
+                    progress = "[" + "=".repeat(step) + " ".repeat(totalSteps - step) + "]";
+                    textarea.value = processHead + progress + "\n" + `${Math.round((step / totalSteps) * 100)}%`;
+                    step++;
+                    setTimeout(update, delay);
+                } else {
+                    err = false;
+                    console.value += "\n\nWaiting for response...";
+                    processHead = "WELCOME TO PUBDATER\n-------------------\n";
+                }
+            }
+            update();
+        }
+
+        function runPubdaterCall() {
+            let version = document.getElementById("version").value;
+            let pubspec = document.getElementById("pubspec").value;
+            let output = document.getElementById("output");
+
+            if (inProgress)
+                return;
+
+            if (version == "" || pubspec == "") {
+                console.value += "\nPlease fill in all the fields!\n";
+                return;
+            }
+
+            inProgress = true;
+
+            let data = {
+                dependencies: pubspec,
+                version: version
+            };
+
+            processHead += "\nProcessing...\n";
+            updateProgressBar(console, 15, 50);
+
+            fetch("http://127.0.0.1:8001/api/process/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            })
+                .then(response => response.json())
+                .then(data => {
+                    processHead = "WELCOME TO PUBDATER\n-------------------\n";
+                    console.value = processHead + "\nProcessing...\n[" + "=".repeat(15) + "]\n100%";
+                    console.value += data.error == undefined ? "\n\nCompleted!" : "\n\nFailed!";
+                    output.value = data.dependencies == undefined ? "" : data.dependencies;
+                    console.value = console.value + "\n\n" + (data.error != undefined ? `ERR: ${data.error}` : `MESSAGE: ${data.message}\n\nUpdated ${data.count} dependencies.`);
+                    inProgress = false;
+                })
+                .catch(error => {
+                    err = true;
+                    console.value = console.value + "\n\nERR: " + error;
+                    inProgress = false;
+                });
+        }
+
+    </script>
+
+</body>
+
+</html>

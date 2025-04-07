@@ -1,0 +1,337 @@
+@font-face {
+    font-family: 'HeadingFont';
+    src: url('fonts/InstrumentSans-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'InstrumentSans-Med';
+    src: url('fonts/InstrumentSans-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'PoweredByFont';
+    src: url('fonts/Inconsolata-Bold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Inconsolata-Regular';
+    src: url('fonts/Inconsolata-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'SplineSans-Med';
+    src: url('fonts/SplineSansMono-Medium.ttf') format('truetype');
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #0D0E30;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.title-bar {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    background-color: #0D0E30;
+    pointer-events: none;
+    padding: 1px 20px;
+    box-sizing: border-box;
+    flex: 0 1 auto;
+}
+
+.logo {
+    height: 80px;
+    margin-right: 8px;
+    pointer-events: none;
+}
+
+.title-text {
+    text-align: center;
+    font-family: 'HeadingFont';
+    color: #fff;
+    pointer-events: none;
+    flex-grow: 1;
+}
+
+.title-text h1 {
+    margin: 0;
+    font-size: 35px;
+}
+
+.powered-by {
+    margin: 0;
+    font-family: 'PoweredByFont';
+    font-size: 15px;
+    color: #A0C6FF;
+}
+
+.content {
+    padding: 20px;
+    width: 100%;
+}
+
+.hr {
+    border: none;
+    height: 1px;
+    color: #838486;
+    width: 100%;
+}
+
+.main {
+    background-color: #232444;
+    margin-top: 15px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    border: solid 2px;
+    border-color: #059e61;
+    width: 75vw;
+}
+
+.main-body {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    width: 100vw;
+}
+
+.noCursor {
+    cursor: default;
+}
+
+.main-body textarea {
+    margin-left: 2vw;
+    margin-right: 2vw;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 20vw;
+    background-color: #0D0E30;
+    resize: none;
+    outline: none;
+    border: none;
+}
+
+.main textarea {
+    flex: 1 1 auto;
+    display: flex;
+    text-align: left;
+    color: white;
+    width: 93%;
+    height: 92%;
+    resize: none;
+    font-size: 17px;
+    background-color: #232444;
+    font-family: 'Inconsolata-Regular';
+    border: none;
+    outline: none;
+}
+
+#console {
+    font-family: 'PoweredByFont';
+    color: white;
+    font-size: 16px;
+}
+
+#help {
+    font-family: 'PoweredByFont';
+    color: white;
+    font-size: 16px;
+}
+
+.main textarea:focus {
+    text-align: left;
+    color: white;
+    border: none;
+    outline: none;
+}
+
+.btm {
+    display: flex;
+    align-items: center;
+    flex: 0 1 auto;
+    text-align: center;
+    background-color: #232444;
+    padding: 25px 40px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    border-radius: 20px;
+    border: solid 2px;
+    border-color: #4376c2;
+    width: 60vw;
+}
+
+.typing-area {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    color: #fff;
+    flex-direction: row;
+    height: 15vh;
+}
+
+#options {
+    background-color: #343B5A;
+    border: solid 1px;
+    border-color: #786CAC;
+    padding: 10px;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+    font-family: 'HeadingFont';
+    transition: background-color 0.5s ease;
+    border-radius: 13px;
+}
+
+#options:hover {
+    background-color: #584883;
+}
+
+.p1 {
+    display: flex;
+    flex: 0.85;
+    width: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+    height: 100%;
+}
+
+.p2 {
+    display: flex;
+    flex: 0.15;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-left: 20px;
+    background-color: #343B5A;
+    border: solid 1px;
+    border-color: #786CAC;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    font-family: 'HeadingFont';
+    border-radius: 13px;
+}
+
+#dart-ver {
+    text-align: left;
+}
+
+.p3 {
+    display: flex;
+    flex: 0.05;
+    margin-left: 20px;
+    height: 100%;
+    align-items: center;
+}
+
+.submit path {
+    width: 40px;
+    height: 45px;
+    fill: #8888F0;
+    transition: fill 0.5s ease;
+}
+
+.submit:hover path {
+    fill: #9169ff;
+}
+
+.clicked-submit:not(:hover) path {
+    fill: #fff;
+}
+
+.version-txt-line {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+.ver {
+    margin-left: 5px;
+    pointer-events: none;
+}
+
+#version {
+    width: 100%;
+    border: none;
+    display: block;
+    border-bottom: solid 1px;
+    font-family: 'Inconsolata-Regular';
+    color: #fff;
+    padding-left: 5px;
+    font-size: 17px;
+    margin-bottom: 10px;
+    border-color: #5a62a5;
+    overflow: auto;
+    background-color: #343B5A;
+    transition: border-color 0.5s ease;
+    padding-bottom: 10px;
+}
+
+#version:focus {
+    outline: none;
+    border: none;
+    border-bottom: solid 1px;
+    border-color: #fff;
+    background-color: #343B5A;
+}
+
+#version:hover:not(:focus) {
+    border-bottom: solid 1px;
+    border-color: #5f96e9;
+}
+
+.p1 textarea {
+    width: 100%;
+    border: none;
+    display: block;
+    border-bottom: solid 1px;
+    font-family: 'Inconsolata-Regular';
+    color: #fff;
+    padding-left: 5px;
+    font-size: 17px;
+    resize: none;
+    border-color: #5a62a5;
+    overflow: auto;
+    background-color: #232444;
+    padding-bottom: 20px;
+    transition: border-color 0.5s ease;
+}
+
+.p1 textarea::placeholder {
+    position: absolute;
+    bottom: 10px;
+}
+
+.p1 textarea:focus {
+    outline: none;
+    border: none;
+    border-bottom: solid 1px;
+    border-color: #fff;
+    background-color: #232444;
+}
+
+.p1 textarea:hover:not(:focus) {
+    border-bottom: solid 1px;
+    border-color: #5f96e9;
+}
+
+textarea::-webkit-scrollbar {
+    width: 8px;
+}
+
+textarea::-webkit-scrollbar-track {
+    background: #232444;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    background: #4d446e;
+    border-radius: 6px;
+}
+
+textarea::-webkit-scrollbar-thumb:hover {
+    background: #323380;
+}
